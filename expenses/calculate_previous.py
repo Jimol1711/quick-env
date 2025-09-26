@@ -5,9 +5,17 @@ from conversions import (
 
 # manual expenses
 manual_expenses = [
-    ("USD", 120),
-    ("CAD", 80),
-    ("CLP", 50000),
+    ("CAD", 50),
+    ("CAD", 160),
+    ("CAD", 1100),
+    ("CAD", 7),
+    ("USD", 21),
+    ("CLP", 12000),
+    ("USD", 2200),
+    ("CAD", 348.95),
+    ("CLP", 78000),
+    ("CAD", 187.2),
+    ("CLP", 50000)
 ]
 
 def convert_to_usd(amount, currency):
@@ -25,3 +33,4 @@ def convert_to_usd(amount, currency):
 
 # previous amount calculation
 PREVIOUS_AMOUNT_USD = sum(convert_to_usd(amount, currency) for currency, amount in manual_expenses)
+print(f"Previous amount in USD: {PREVIOUS_AMOUNT_USD:.2f}")

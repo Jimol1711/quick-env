@@ -1,0 +1,27 @@
+eggs
+arugula
+parsley
+ham
+cheese
+mayonaisse
+strawberry jam
+whole wheat bread
+naan bread
+oatmeal
+greek yogurt
+bananas
+butter
+lemon
+red pepper
+tabasco
+tomato sauce
+ground beef
+chicken breast
+chorizo
+cream cheese
+
+Generic:
+olive oil
+salt
+pepper
+

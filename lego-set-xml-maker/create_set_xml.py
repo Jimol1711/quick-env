@@ -121,12 +121,12 @@ def filter_xml_by_set(input_path, set_number, output_path=None):
 
 
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: python filter_bricklink_xml_by_set.py <input_xml> <set_number> [output_xml]")
+    if len(sys.argv) < 2:
+        print("Usage: python filter_bricklink_xml_by_set.py <set_number> [output_xml]")
         sys.exit(1)
 
-    input_xml = sys.argv[1]
-    set_number = sys.argv[2]
+    input_xml = "pieces.xml"
+    set_number = sys.argv[1]
 
     if len(sys.argv) >= 4:
         output_xml = sys.argv[3]

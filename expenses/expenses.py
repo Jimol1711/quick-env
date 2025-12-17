@@ -4,7 +4,7 @@ import pandas as pd
 import glob
 import os
 from conversions import get_usd_to_clp_rate
-from calculate_previous import PREVIOUS_AMOUNT_USD
+# from calculate_previous import PREVIOUS_AMOUNT_USD
 
 # === Helper to load a single file ===
 def load_statement(file_path):
@@ -35,14 +35,34 @@ df_all = df_all.reset_index(drop=True)
 rate_usd_clp = get_usd_to_clp_rate()
 print(f"USD → CLP rate: {rate_usd_clp}")
 
-# Sum USD column
-usd_sum = df_all["Monto (USD)"].dropna().astype(float).sum()
+# === Sum USD column safely (fix for non-numeric values like '1 / 0') ===
+amount_col = "Unnamed: 10"
+
+# Convert column to cleaned strings
+s = df_all[amount_col].astype(str).str.strip()
+
+# Optional: handle common Spanish/Chile number formatting:
+# - thousands separator '.'  -> removed
+# - decimal separator ','    -> replaced with '.'
+s = s.str.replace(".", "", regex=False).str.replace(",", ".", regex=False)
+
+# Convert to numeric; invalid parses become NaN instead of crashing
+amount_num = pd.to_numeric(s, errors="coerce")
+
+# Debug: show distinct bad values (non-empty) that couldn't be parsed
+bad_mask = amount_num.isna() & s.ne("") & s.ne("nan") & s.ne("None")
+if bad_mask.any():
+    print("\nNon-numeric values found in 'Monto ($)' (these will be ignored):")
+    print(df_all.loc[bad_mask, [amount_col]].drop_duplicates().to_string(index=False))
+
+# Sum numeric values only
+usd_sum = amount_num.dropna().sum()
 
 # Add manual previous amount
-usd_sum_total = usd_sum + PREVIOUS_AMOUNT_USD
+usd_sum_total = usd_sum  # + PREVIOUS_AMOUNT_USD
 
 print(f"Transactions from Excel files (USD): {usd_sum:.2f}")
-print(f"Previous manual expenses (USD): {PREVIOUS_AMOUNT_USD:.2f}")
+# print(f"Previous manual expenses (USD): {PREVIOUS_AMOUNT_USD:.2f}")
 print(f"Total USD amount: {usd_sum_total:.2f}")
 
 # Convert to CLP

@@ -32,5 +32,5 @@ def convert_to_usd(amount, currency):
         raise ValueError(f"Unsupported currency: {currency}")
 
 # previous amount calculation
-# PREVIOUS_AMOUNT_USD = sum(convert_to_usd(amount, currency) for currency, amount in manual_expenses)
-# print(f"Previous amount in USD: {PREVIOUS_AMOUNT_USD:.2f}")
+PREVIOUS_AMOUNT_USD = sum(convert_to_usd(amount, currency) for currency, amount in manual_expenses)
+print(f"Previous amount in USD: {PREVIOUS_AMOUNT_USD:.2f}")

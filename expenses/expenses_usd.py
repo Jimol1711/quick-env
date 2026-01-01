@@ -4,7 +4,7 @@ import pandas as pd
 import glob
 import os
 from conversions import get_usd_to_clp_rate
-# from calculate_previous import PREVIOUS_AMOUNT_USD
+from calculate_previous import PREVIOUS_AMOUNT_USD
 
 # === Helper to load a single file ===
 def load_statement(file_path):
@@ -36,13 +36,13 @@ rate_usd_clp = get_usd_to_clp_rate()
 print(f"USD → CLP rate: {rate_usd_clp}")
 
 # Sum USD column
-usd_sum = df_all["Monto ($)"].dropna().astype(float).sum()
+usd_sum = df_all["Monto (USD)"].dropna().astype(float).sum()
 
 # Add manual previous amount
-usd_sum_total = usd_sum # + PREVIOUS_AMOUNT_USD
+usd_sum_total = usd_sum + PREVIOUS_AMOUNT_USD
 
 print(f"Transactions from Excel files (CLP): {usd_sum:.2f}")
-# print(f"Previous manual expenses (CLP): {PREVIOUS_AMOUNT_USD:.2f}")
+print(f"Previous manual expenses (CLP): {PREVIOUS_AMOUNT_USD:.2f}")
 print(f"Total CLP amount: {usd_sum_total:.2f}")
 
 # Convert to CLP
